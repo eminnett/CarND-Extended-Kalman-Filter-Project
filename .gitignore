@@ -6,3 +6,7 @@ build/
 
 # editor config
 .vscode/
+
+# ignore the tracker mac app and zip
+*.app
+*.zip
