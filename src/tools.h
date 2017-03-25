@@ -21,7 +21,20 @@ public:
   Eigen::VectorXd CalculateRMSE(const std::vector<Eigen::VectorXd> &estimations, const std::vector<Eigen::VectorXd> &ground_truth);
 
   /**
-  * A helper method to calculate Jacobians.
+  * A helper method to convert a polar range, bearing, and range rate vector
+  * into a cartesian position and speed vector .
+  */
+  Eigen::VectorXd PolarToCartesianPosition(const Eigen::VectorXd& x_state);
+
+  /**
+  * A helper method to convert a cartesian position and speed vector into a Polar
+  * range, bearing, and range rate vector.
+  */
+  Eigen::VectorXd CartesianToPolarMeasurement(const Eigen::VectorXd& x_state);
+
+  /**
+  * A helper method to calculate the Jacobian matrix of the
+  * CartesianToPolarMeasurement function.
   */
   Eigen::MatrixXd CalculateJacobian(const Eigen::VectorXd& x_state);
 

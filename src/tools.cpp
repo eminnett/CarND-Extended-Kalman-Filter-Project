@@ -42,6 +42,45 @@ VectorXd Tools::CalculateRMSE(const vector<VectorXd> &estimations,
 
     return rmse;
 }
+
+VectorXd Tools::PolarToCartesianPosition(const VectorXd& x_state) {
+    float rho = x_state(0);
+    float phi = x_state(1);
+    float rho_dot = x_state(2);
+
+    float tan_phi = tan(phi);
+    float px = sqrt(rho*rho / (1 + tan_phi*tan_phi));
+    float py = tan_phi * px;
+
+    VectorXd cartesian_vec(4);
+    cartesian_vec << px, py, 0, 0;
+    return cartesian_vec;
+}
+
+VectorXd Tools::CartesianToPolarMeasurement(const VectorXd& x_state) {
+    float px = x_state(0);
+    float py = x_state(1);
+    float vx = x_state(2);
+    float vy = x_state(3);
+    float position_vec_magnitude = sqrt(px*px+py*py);
+
+    VectorXd polar_vec(3);
+    polar_vec << 0,0,0;
+
+    if (px == 0 || position_vec_magnitude == 0) {
+        cout << "Division by 0 avoided." << endl;
+        px = 0.00000001;
+        position_vec_magnitude = sqrt(px*px+py*py);
+    } else if (position_vec_magnitude == 0) {
+        cout << "Division by 0 avoided." << endl;
+        position_vec_magnitude = 0.00000001;
+    }
+
+    polar_vec << position_vec_magnitude,
+                 atan2(py, px),
+                 (px*vx+py*vy)/position_vec_magnitude;
+
+    return polar_vec;
 }
 
 MatrixXd Tools::CalculateJacobian(const VectorXd& x_state) {
