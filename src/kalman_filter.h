@@ -8,6 +8,9 @@ public:
   // state vector
   Eigen::VectorXd x_;
 
+  // predicted measurement vector
+  Eigen::VectorXd z_pred_;
+
   // state covariance matrix
   Eigen::MatrixXd P_;
 
