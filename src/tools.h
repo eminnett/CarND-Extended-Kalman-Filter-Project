@@ -24,7 +24,7 @@ public:
   * A helper method to convert a polar range, bearing, and range rate vector
   * into a cartesian position and speed vector .
   */
-  Eigen::VectorXd PolarToCartesianPosition(const Eigen::VectorXd& x_state);
+  Eigen::VectorXd PolarToCartesianMeasurement(const Eigen::VectorXd& x_state);
 
   /**
   * A helper method to convert a cartesian position and speed vector into a Polar

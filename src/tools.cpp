@@ -43,7 +43,7 @@ VectorXd Tools::CalculateRMSE(const vector<VectorXd> &estimations,
     return rmse;
 }
 
-VectorXd Tools::PolarToCartesianPosition(const VectorXd& x_state) {
+VectorXd Tools::PolarToCartesianMeasurement(const VectorXd& x_state) {
     float rho = x_state(0);
     float phi = x_state(1);
     float rho_dot = x_state(2);
@@ -51,9 +51,11 @@ VectorXd Tools::PolarToCartesianPosition(const VectorXd& x_state) {
     float tan_phi = tan(phi);
     float px = sqrt(rho*rho / (1 + tan_phi*tan_phi));
     float py = tan_phi * px;
+    float vx = rho_dot * cos(phi);
+    float vy = rho_dot * sin(phi);
 
     VectorXd cartesian_vec(4);
-    cartesian_vec << px, py, 0, 0;
+    cartesian_vec << px, py, vx, vy;
     return cartesian_vec;
 }
 

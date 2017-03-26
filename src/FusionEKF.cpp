@@ -76,7 +76,7 @@ void FusionEKF::ProcessMeasurement(const MeasurementPackage &measurement_pack) {
       /**
       Convert radar from polar to cartesian coordinates and initialize state.
       */
-      x_ = tools.PolarToCartesianPosition(measurement_pack.raw_measurements_);
+      x_ = tools.PolarToCartesianMeasurement(measurement_pack.raw_measurements_);
       Hj_ = tools.CalculateJacobian(x_);
       ekf_.Init(x_, P_, F_, Hj_, R_radar_);
     }
