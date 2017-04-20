@@ -27,6 +27,8 @@ void KalmanFilter::UpdateEKF(const VectorXd &z) {
   // z_pred_, H_, and R_ are set before calling UpdateEKF to configure the EKF
   // to work correctly with either the lidar or radar measurement.
   VectorXd y = z - z_pred_;
+  // Normalise the angle of yaw angle in y between -pi and pi
+  y(1) = atan2(sin(y(1)), cos(y(1)));
   MatrixXd Ht = H_.transpose();
   MatrixXd PHt = P_ * Ht;
   MatrixXd S = H_ * PHt + R_;
